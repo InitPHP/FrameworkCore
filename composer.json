@@ -1,0 +1,51 @@
+{
+    "name": "initphp/framework-core",
+    "description": "InitPHP Framework Core",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "InitPHP\\Framework\\": "src/"
+        },
+        "files": [
+            "src/Helpers/Init_helper.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Muhammet ŞAFAK",
+            "email": "info@muhammetsafak.com.tr",
+            "homepage": "https://www.muhammetsafak.com.tr",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "ext-iconv": "*",
+        "ext-pdo": "*",
+        "initphp/http": "^1.0",
+        "initphp/router": "^1.1",
+        "initphp/dotenv": "^1.0",
+        "initphp/polyfill-php80": "^1.0",
+        "initphp/container": "^0.3",
+        "initphp/translator": "^0.2",
+        "initphp/config": "^1.0",
+        "initphp/database": "^1.1",
+        "initphp/validation": "^1.0",
+        "initphp/escaper": "^1.0",
+        "initphp/encryption": "^1.0",
+        "initphp/cache": "^0.1",
+        "initphp/console": "^1.0",
+        "initphp/events": "^1.0",
+        "initphp/logger": "^1.0",
+        "initphp/input": "^1.1",
+        "initphp/mailer": "^1.0",
+        "initphp/sessions": "^1.0",
+        "initphp/cookies": "^1.1",
+        "initphp/auth": "^1.0",
+        "verot/class.upload.php": "^2.1",
+        "filp/whoops": "^2.14"
+    }
+}
