@@ -142,7 +142,7 @@ if(!\function_exists('get_head')){
         \ob_start(function ($tmp) use ($head) {
             $head .= $tmp;
         });
-        $head .= \InitPHP\Events\Events::trigger('get_head', []);
+        \InitPHP\Events\Events::trigger('get_head', []);
         \ob_end_clean();
         return $head;
     }
