@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace InitPHP\Framework\Facade;
 
+use InitPHP\Framework\Exception\ConfigClassException;
+
 /**
  * @mixin \InitPHP\Mailer\Mailer
  * @method static \InitPHP\Mailer\Mailer clear(bool $clearAttachments = false)
@@ -52,7 +54,17 @@ class Mailer
     private static function getMailerInstance(): \InitPHP\Mailer\Mailer
     {
         if(!isset(self::$mailerInstance)){
-            self::$mailerInstance = new \InitPHP\Mailer\Mailer();
+            if(!\class_exists('\\App\\Configs\\Mailer')){
+                throw new ConfigClassException('Mailer');
+            }
+            /** @var \InitPHP\Framework\Base\Config $config */
+            $config = Container::get('\\App\\Configs\\Mailer');
+            if($config->get('enable', false) === TRUE){
+                $config = $config->get('default', []);
+            }else{
+                $config = null;
+            }
+            self::$mailerInstance = new \InitPHP\Mailer\Mailer($config);
         }
         return self::$mailerInstance;
     }

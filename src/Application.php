@@ -66,11 +66,13 @@ class Application
                     \InitPHP\Config\Config::setClass($config);
                 }
             }
+            unset($configs);
 
             $helpers = $autoload->get('helpers', []);
             if(!empty($helpers)){
                 \helper(...$helpers);
             }
+            unset($helpers);
         }
 
         if(\env('ENVIRONMENT', \config('base.environment', null)) === 'development'){
@@ -83,13 +85,20 @@ class Application
             \error_reporting(0);
         }
 
+        if(($timezone = \config('base.timezone', null)) !== null){
+            \date_default_timezone_set($timezone);
+        }
+        unset($timezone);
+
     }
 
     public static function run()
     {
+        Events::trigger('before_emitter', []);
         $res = \InitPHP\Framework\Facade\Route::dispatch();
         $emit = new Emitter;
         $emit->emit($res);
+        Events::trigger('after_emitter', []);
     }
 
 }
