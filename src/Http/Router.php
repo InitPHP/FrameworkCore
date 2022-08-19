@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace InitPHP\Framework\Http;
 
+use InitPHP\Framework\Facade\Container;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -34,6 +35,7 @@ class Router extends \InitPHP\Router\Router
             ],
             'base_path'         => \env('BASE_PATH', '/'),
             'variable_method'   => \env('VARIABLE_METHOD', false),
+            'container'         => new Container(),
         ];
 
         parent::__construct($request, $response, $configs);

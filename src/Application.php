@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace InitPHP\Framework;
 
 use InitPHP\Framework\Exception\FrameworkException;
+use InitPHP\Framework\Facade\Events;
 use InitPHP\HTTP\Emitter;
 
 class Application
@@ -32,6 +33,7 @@ class Application
 
     public static function boot()
     {
+        Events::trigger('boot_before', []);
         foreach (self::IMPERATIVE_CONSTANTS as $const) {
             if(!\defined($const)){
                 throw new FrameworkException('The "' . $const . '" constant must be defined.');
@@ -44,7 +46,7 @@ class Application
             }
         }
 
-        if(!\file_exists(\BASE_DIR . '.env.php')){
+        if(\file_exists(\BASE_DIR . '.env.php')){
             \InitPHP\Dotenv\Dotenv::create(\BASE_DIR . '.env.php');
         }else{
             $path = \BASE_DIR . '.env';

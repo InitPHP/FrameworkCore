@@ -74,7 +74,7 @@ if(!\function_exists('view')){
      * @param array|object $data
      * @return string
      */
-    function view($view, $data): string
+    function view($view, $data = []): string
     {
         return \InitPHP\Framework\Facade\Load::view($view, $data);
     }
