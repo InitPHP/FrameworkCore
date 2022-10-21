@@ -32,7 +32,7 @@
         "initphp/container": "^0.3",
         "initphp/translator": "^0.2",
         "initphp/config": "^1.0",
-        "initphp/database": "^1.1",
+        "initphp/database": "^2.0",
         "initphp/validation": "^1.0",
         "initphp/escaper": "^1.0",
         "initphp/encryption": "^1.0",

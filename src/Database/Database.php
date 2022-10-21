@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace InitPHP\Framework\Database;
 
-use InitPHP\Database\DB;
+use InitPHP\Database\Database as DB;
 use InitPHP\Framework\Exception\ConfigClassException;
 use InitPHP\Framework\Exception\FrameworkException;
 use InitPHP\Framework\Facade\Container;
@@ -41,7 +41,7 @@ class Database
             $this->db = new DB($config->get('default', []));
 
             if($config->get('isGlobal', false) === TRUE){
-                $this->db->getConnection()->connectionAsGlobal();
+                $this->db->connectionAsGlobal();
             }
         }
 
