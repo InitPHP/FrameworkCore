@@ -23,7 +23,9 @@ class Model extends \InitPHP\Database\Model
 
     public function __construct()
     {
-        if(empty($this->getProperty('connection', null))){
+        $connection = $this->connection ?? null;
+
+        if(empty($connection)){
             if(!\class_exists('\\App\\Configs\\Database')){
                 throw new ModelException('Configuration class \\App\\Configs\\Database not found.');
             }
@@ -41,5 +43,4 @@ class Model extends \InitPHP\Database\Model
         }
         parent::__construct();
     }
-
 }
