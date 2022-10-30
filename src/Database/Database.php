@@ -38,10 +38,12 @@ class Database
         $config = Container::get('\\App\\Configs\\Database');
 
         if($config->get('enable', false) === TRUE){
-            $this->db = new DB($config->get('default', []));
+            $credentials = $config->get('default', []);
+            $this->db = new DB($credentials);
 
             if($config->get('isGlobal', false) === TRUE){
                 $this->db->connectionAsGlobal();
+                \InitPHP\Database\Facade\DB::createImmutable($credentials);
             }
         }
 
