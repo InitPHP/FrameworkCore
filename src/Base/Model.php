@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace InitPHP\Framework\Base;
 
+use InitPHP\Database\Database;
 use InitPHP\Database\Exceptions\ModelException;
 use InitPHP\Framework\Facade\Container;
 
@@ -40,6 +41,7 @@ class Model extends \InitPHP\Database\Model
             ){
                 $this->connection = $connection;
             }
+            $this->setCredentials(['return' => Database::ENTITY]);
         }
         parent::__construct();
     }
