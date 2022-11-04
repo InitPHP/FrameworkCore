@@ -85,6 +85,10 @@ class Application
             \error_reporting(0);
         }
 
+        if(\class_exists("\\App\\Configs\\Database")){
+            new \InitPHP\Framework\Database\Database();
+        }
+
         if(($timezone = \config('base.timezone', null)) !== null){
             \date_default_timezone_set($timezone);
         }
