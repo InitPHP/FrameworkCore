@@ -161,3 +161,70 @@ if(!\function_exists('esc')){
         return \InitPHP\Escaper\Esc::esc($data, $context, $encoding);
     }
 }
+
+if(!\function_exists('isCLI')){
+    /**
+     * Betiğin bir CLI tarafından mı çalıştırıldığı bilgisini verir.
+     *
+     * @return bool
+     */
+    function isCLI(): bool
+    {
+        return \defined('PHP_SAPI') && !\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true);
+    }
+}
+
+if(!\function_exists('dump')){
+    /**
+     * Verilen değerleri dump eder.
+     *
+     * Eğer InitPHP ya da Symfony Dumperlarını bulursa bunlarla dump eder bulamazsa en basic şekilde dump yapar.
+     * @param mixed ...$values
+     * @return void
+     */
+    function dump(...$values): void
+    {
+        if(\class_exists("\InitPHP\VarDumper\VarDumper")){
+            foreach ($values as $value) {
+                \InitPHP\VarDumper\VarDumper::newInstance($value)->dump();
+            }
+            return;
+        }
+        if(\class_exists("\Symfony\Component\VarDumper\VarDumper")){
+            foreach ($values as $value) {
+                \Symfony\Component\VarDumper\VarDumper::dump($value);
+            }
+            return;
+        }
+
+        $before = $after = \PHP_EOL;
+        if(isCLI()){
+            $before .= '<pre style="color: #F1F1F1; background: #222; border: 1px solid #111; padding: 8px; margin: 8px; border-radius: 2px; overflow: auto;">';
+            $after .= '</pre>';
+        }
+        foreach ($values as $value) {
+            echo $before;
+            \var_dump($value);
+            echo $after;
+        }
+    }
+}
+
+if(!\function_exists('dd')){
+    /**
+     * Verilen değerleri dump() eder. Ve belleği boşaltıp, betiği sonlandırır.
+     *
+     * @param mixed ...$values
+     * @return void
+     */
+    function dd(...$values): void
+    {
+        dump(...$values);
+        if(\ob_get_level() > 0){
+            $content = \ob_get_contents();
+            \ob_get_flush();
+            echo $content;
+        }
+        die();
+    }
+}
