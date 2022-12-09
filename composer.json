@@ -42,7 +42,7 @@
         "initphp/logger": "^1.0",
         "initphp/input": "^1.1",
         "initphp/mailer": "^1.0",
-        "initphp/sessions": "^1.0",
+        "initphp/sessions": "^2.0",
         "initphp/cookies": "^1.1",
         "initphp/auth": "^1.0",
         "verot/class.upload.php": "^2.1",

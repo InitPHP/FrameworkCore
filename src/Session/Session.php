@@ -15,8 +15,8 @@ declare(strict_types=1);
 
 namespace InitPHP\Framework\Session;
 
-use InitPHP\Framework\Exception\ConfigClassException;
-use InitPHP\Framework\Facade\Container;
+use \InitPHP\Framework\Exception\{ConfigClassException, FrameworkException};
+use \InitPHP\Framework\Facade\Container;
 
 class Session extends \InitPHP\Sessions\Session
 {
@@ -30,10 +30,23 @@ class Session extends \InitPHP\Sessions\Session
         /** @var \InitPHP\Framework\Base\Config $config */
         $config = Container::get('\\App\\Configs\\Session');
 
-        if($config->get('enable', FALSE) === TRUE && $this->isStarted() === FALSE){
-            $this->start($config->get('configuration', []));
+        if ($config->get('enable', FALSE) === TRUE && $this->isStarted() === FALSE) {
+
+            $adapter = $config->get('adapter');
+
+            if (\is_string($adapter)) {
+                if (\class_exists($adapter)) {
+                    $adapterArguments = $config->get('adapterArguments', []);
+                    $adapterObj = new $adapter(...$adapterArguments);
+                } else {
+                    throw new FrameworkException();
+                }
+            } else {
+                $adapterObj = null;
+            }
+
+            self::createImmutable($adapterObj)->start($config->get('configuration', []));
         }
-        parent::__construct();
     }
 
 }
